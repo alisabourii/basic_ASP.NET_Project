@@ -1,8 +1,28 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model List<Auctions.Models.Listing>
+
+@{
+    ViewData["Title"] = "Index";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<h2>Active Listings</h2>
+
+@foreach(var Listing in Model)
+{
+    <div class="container" style="background-color rgba(138,129,133,0.6); margin-top:50px; margin-bottom:50px; padding:20px; border-radius:10px">
+        <div class="row">
+            <div class="col col-xs-6 col-lg-5">
+                <img src="/Images/@Listing.ImagePath" style="max-width:400px; max-height:400px" />
+            </div>
+            <div class="col col-xs-6 col-lg-7">
+                <h5><a asp-action="Details" asp-route-id="@Listing" style="color:black;">@Listing.Title</a></h5>
+                <div>@Listing.Description</div>
+                <div>Bid: $@Listing.Price.ToString("N2")</div>
+                <div>Listed By: @Listing.User.Email</div>
+            </div>
+        </div>
+    </div>
+}
+@if (!Model.Any())
+{
+    <p>No Active Listings!</p>
+}
